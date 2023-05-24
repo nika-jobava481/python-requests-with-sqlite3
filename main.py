@@ -1,10 +1,8 @@
 import requests,json,sqlite3,sys,win10toast
+api="https://v2.jokeapi.dev/joke/Any"
 
 conn = sqlite3.connect('jokes.sqlite3')
-
 cur = conn.cursor()
-print(cur, type(cur))
-
 cur.execute('''CREATE TABLE IF NOT EXISTS jokes
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
                     jokeID INTEGER,
@@ -23,11 +21,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS jokes
 #თუ ხუმრობის ტიპია single, მოცემულია ხუმრობის ტექსტი, ხოლო twopartისშემთხვევაში, მოცემულია setup როგორც ხუმრობის დასაწყისი (უმეტეს შემთხვევაში კითხვის სახით) და delivery, ანუ პასუხი
 #ამ 3 მონაცემს დათმობილი აქვს მაქსიმალური შესაძლო ადგილი
 #ყველა სხვა მონაცემი არის ხუმრობის ქვეკატეგორია.
-
 conn.commit()
-
-api="https://v2.jokeapi.dev/joke/Any"
-
 res=requests.get(api)
 if res.status_code>=500:
     print("server error")
@@ -39,12 +33,13 @@ print(f"{res['joke']} \n{res['category']}") if res['type']=='single' else print(
 
 def construct_tup(obj:dict):
     tup=(obj['id'], obj['category'])
+    
     if obj["type"]=="single":
         tup+=(obj['joke'],"-----","-----")
     else:
         tup+=("-----",obj['setup'],obj['delivery'])
+    
     tup+=(obj['flags']['nsfw'],obj['flags']['religious'],obj['flags']['political'],obj['flags']['racist'],obj['flags']['sexist'],obj['flags']['explicit'])
-
     updfile(obj)
 
     return tup
