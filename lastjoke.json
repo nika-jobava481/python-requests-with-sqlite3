@@ -1,0 +1,18 @@
+{
+    "error": false,
+    "category": "Programming",
+    "type": "twopart",
+    "setup": "Why did the programmer quit his job?",
+    "delivery": "Because he didn't get arrays.",
+    "flags": {
+        "nsfw": false,
+        "religious": false,
+        "political": false,
+        "racist": false,
+        "sexist": false,
+        "explicit": false
+    },
+    "id": 16,
+    "safe": true,
+    "lang": "en"
+}
