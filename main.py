@@ -1,7 +1,5 @@
 import requests,json,sqlite3,sys,win10toast
 
-
-# Create a connection to the database
 conn = sqlite3.connect('jokes.sqlite3')
 
 cur = conn.cursor()
@@ -66,7 +64,7 @@ def insert(tup):
     cur.execute("SELECT jokeID FROM jokes WHERE jokeID=?", (joke_id,))
     result = cur.fetchone()
     
-    if result is None:  # jokeID doesn't exist in the table
+    if result is None:
         query = "INSERT INTO jokes (jokeID, category, joke, setup, delivery, nsfw, religious, political, racist, sexist, explicit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         cur.execute(query, tup)
         conn.commit()
